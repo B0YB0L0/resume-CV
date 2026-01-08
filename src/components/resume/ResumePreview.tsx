@@ -25,6 +25,7 @@ export function ResumePreview({ resume }: ResumePreviewProps) {
     <div className="flex-1 p-8 flex justify-center">
       <div className="w-full max-w-[650px]">
         <div 
+          id="resume-preview"
           className="resume-paper rounded-lg p-8 bg-white"
           style={{
             aspectRatio: '8.5 / 11',
