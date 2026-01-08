@@ -47,59 +47,21 @@ const features = [
   },
 ];
 
-const plans = [
-  {
-    name: 'Free',
-    price: '$0',
-    period: 'forever',
-    description: 'Perfect for getting started',
-    features: [
-      '1 resume',
-      '3 templates',
-      'PDF export with watermark',
-      'Basic customization',
-    ],
-    cta: 'Start Free',
-    popular: false,
-  },
-  {
-    name: 'Pro',
-    price: '$9',
-    period: 'per month',
-    description: 'For serious job seekers',
-    features: [
-      'Unlimited resumes',
-      'All templates',
-      'PDF export without watermark',
-      'Custom colors & fonts',
-      'Priority support',
-      'Resume analytics',
-    ],
-    cta: 'Start Pro Trial',
-    popular: true,
-  },
-  {
-    name: 'Team',
-    price: '$29',
-    period: 'per month',
-    description: 'For teams and organizations',
-    features: [
-      'Everything in Pro',
-      'Up to 10 team members',
-      'Shared templates',
-      'Brand kit',
-      'Admin dashboard',
-      'API access',
-    ],
-    cta: 'Contact Sales',
-    popular: false,
-  },
-];
-
 const stats = [
   { value: '50K+', label: 'Resumes Created' },
   { value: '92%', label: 'Interview Rate' },
   { value: '4.9/5', label: 'User Rating' },
+];
+
+const allFeatures = [
+  'Unlimited resumes',
+  'All templates',
+  'PDF export without watermark',
+  'Custom colors & fonts',
+  'Priority support',
+  'Resume analytics',
+  'AI suggestions',
+  'Public sharing links',
 ];
 
 export default function Index() {
@@ -118,13 +80,11 @@ export default function Index() {
           <div className="hidden md:flex items-center gap-8">
             <a href="#features" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Features</a>
             <a href="#templates" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Templates</a>
-            <a href="#pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Pricing</a>
           </div>
           
           <div className="flex items-center gap-3">
-            <Button variant="ghost" size="sm">Sign In</Button>
             <Link to="/builder">
-              <Button size="sm">Get Started</Button>
+              <Button size="sm">Get Started - Free</Button>
             </Link>
           </div>
         </div>
@@ -142,7 +102,7 @@ export default function Index() {
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-medium mb-8 animate-fade-in">
               <Sparkles className="w-4 h-4" />
-              <span>AI-Powered Resume Builder</span>
+              <span>100% Bepul Resume Builder</span>
             </div>
             
             <h1 className="font-display text-5xl md:text-7xl font-bold tracking-tight mb-6 animate-slide-up">
@@ -157,13 +117,15 @@ export default function Index() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 animate-slide-up delay-200">
               <Link to="/builder">
                 <Button variant="hero" size="xl" className="group">
-                  Create Your Resume
+                  Create Your Resume - Free
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
-              <Button variant="outline" size="xl">
-                View Templates
-              </Button>
+              <a href="#templates">
+                <Button variant="outline" size="xl">
+                  View Templates
+                </Button>
+              </a>
             </div>
             
             {/* Stats */}
@@ -350,62 +312,37 @@ export default function Index() {
         </div>
       </section>
 
-      {/* Pricing Section */}
-      <section id="pricing" className="py-24">
+      {/* Free Features Section */}
+      <section className="py-24">
         <div className="container mx-auto px-6">
-          <div className="text-center max-w-2xl mx-auto mb-16">
+          <div className="max-w-3xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-success/10 text-success text-sm font-medium mb-6">
+              <Check className="w-4 h-4" />
+              <span>100% Bepul - Hech qanday to'lov yo'q</span>
+            </div>
+            
             <h2 className="font-display text-4xl font-bold mb-4">
-              Simple, transparent pricing
+              Barcha funksiyalar bepul
             </h2>
-            <p className="text-lg text-muted-foreground">
-              Start for free, upgrade when you need more features.
+            <p className="text-lg text-muted-foreground mb-12">
+              Hech qanday cheklov yo'q. Barcha shablonlar, PDF yuklab olish va boshqa barcha funksiyalardan foydalaning.
             </p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {plans.map((plan) => (
-              <div 
-                key={plan.name}
-                className={`relative p-6 rounded-2xl border ${
-                  plan.popular 
-                    ? 'border-accent bg-card shadow-glow' 
-                    : 'border-border/50 bg-card'
-                }`}
-              >
-                {plan.popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <div className="px-3 py-1 bg-accent text-accent-foreground text-xs font-medium rounded-full">
-                      Most Popular
-                    </div>
-                  </div>
-                )}
-                
-                <div className="text-center mb-6">
-                  <h3 className="font-display text-xl font-bold mb-1">{plan.name}</h3>
-                  <p className="text-sm text-muted-foreground mb-4">{plan.description}</p>
-                  <div className="flex items-baseline justify-center gap-1">
-                    <span className="font-display text-4xl font-bold">{plan.price}</span>
-                    <span className="text-muted-foreground">/{plan.period}</span>
-                  </div>
+            
+            <div className="grid sm:grid-cols-2 gap-4 max-w-xl mx-auto mb-12">
+              {allFeatures.map((feature) => (
+                <div key={feature} className="flex items-center gap-3 text-left p-3 rounded-lg bg-card border border-border/50">
+                  <Check className="w-5 h-5 text-success shrink-0" />
+                  <span className="font-medium">{feature}</span>
                 </div>
-                
-                <ul className="space-y-3 mb-8">
-                  {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-center gap-2 text-sm">
-                      <Check className="w-4 h-4 text-success shrink-0" />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                
-                <Button 
-                  variant={plan.popular ? 'hero' : 'outline'} 
-                  className="w-full"
-                >
-                  {plan.cta}
-                </Button>
-              </div>
-            ))}
+              ))}
+            </div>
+            
+            <Link to="/builder">
+              <Button variant="hero" size="xl" className="group">
+                Start Building - It's Free
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
@@ -420,7 +357,7 @@ export default function Index() {
             Join thousands of professionals who landed their dream jobs with ResumeAI.
           </p>
           <Link to="/builder">
-            <Button variant="hero" size="xl" className="group">
+            <Button variant="heroOutline" size="xl" className="group bg-white/10 hover:bg-white/20">
               Get Started Free
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Button>
@@ -442,11 +379,11 @@ export default function Index() {
             <div className="flex items-center gap-6 text-sm text-muted-foreground">
               <a href="#" className="hover:text-foreground transition-colors">Privacy</a>
               <a href="#" className="hover:text-foreground transition-colors">Terms</a>
-              <a href="#" className="hover:text-foreground transition-colors">Support</a>
+              <a href="#" className="hover:text-foreground transition-colors">Contact</a>
             </div>
             
             <p className="text-sm text-muted-foreground">
-              © 2026 ResumeAI. All rights reserved.
+              © 2024 ResumeAI. All rights reserved.
             </p>
           </div>
         </div>

@@ -1,9 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ResumeEditor } from '@/components/resume/ResumeEditor';
 import { ResumePreview } from '@/components/resume/ResumePreview';
 import { useResumeStore } from '@/store/resumeStore';
+import { exportToPDF } from '@/utils/pdfExport';
+import { toast } from 'sonner';
 import { 
   FileText, 
   Download, 
@@ -11,14 +13,31 @@ import {
   ChevronLeft,
   Settings2,
   Eye,
-  EyeOff
+  EyeOff,
+  Loader2
 } from 'lucide-react';
-import { useState } from 'react';
 
 export default function Builder() {
   const { activeResume, resumes, setActiveResume } = useResumeStore();
   const [showPreview, setShowPreview] = useState(true);
-  
+  const [isExporting, setIsExporting] = useState(false);
+
+  const handleDownloadPDF = async () => {
+    if (!activeResume) return;
+    
+    setIsExporting(true);
+    try {
+      const filename = `${activeResume.personalInfo.name || 'resume'}_resume.pdf`;
+      await exportToPDF('resume-preview', filename);
+      toast.success('PDF yuklab olindi!');
+    } catch (error) {
+      console.error('PDF export error:', error);
+      toast.error('PDF yuklashda xatolik yuz berdi');
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
   // Initialize with first resume if none active
   useEffect(() => {
     if (!activeResume && resumes.length > 0) {
@@ -83,9 +102,19 @@ export default function Builder() {
             <span className="hidden sm:inline">Share</span>
           </Button>
           
-          <Button variant="hero" size="sm" className="gap-2">
-            <Download className="w-4 h-4" />
-            <span className="hidden sm:inline">Download PDF</span>
+          <Button 
+            variant="hero" 
+            size="sm" 
+            className="gap-2"
+            onClick={handleDownloadPDF}
+            disabled={isExporting}
+          >
+            {isExporting ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : (
+              <Download className="w-4 h-4" />
+            )}
+            <span className="hidden sm:inline">{isExporting ? 'Yuklanmoqda...' : 'Download PDF'}</span>
           </Button>
         </div>
       </header>
